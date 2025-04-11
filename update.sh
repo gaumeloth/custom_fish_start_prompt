@@ -109,6 +109,7 @@ IMAGE_FILE="logoLunaLabs.jpeg"
 TEXT_FILE1="config.conf"
 TEXT_FILE2="clr.fish"
 TEXT_FILE3="config.fish"
+TEXT_FILE4="updatecheck.fish"
 
 # Directory di destinazione
 DEST_DIR_NEOFETCH="$HOME/.config/neofetch"
@@ -118,6 +119,7 @@ DEST_DIR_FISH="$HOME/.config/fish"
 DEST_FILE1="${DEST_DIR_NEOFETCH}/${TEXT_FILE1}"       # config.conf
 DEST_FILE2="${DEST_DIR_FISH}/functions/${TEXT_FILE2}" # clr.fish
 DEST_FILE3="${DEST_DIR_FISH}/${TEXT_FILE3}"           # config.fish
+DEST_FILE4="${DEST_DIR_FISH}/functions/${TEXT_FILE4}" # updatecheck.fish
 
 ###################################
 # Controllo directory & copie     #
@@ -147,5 +149,6 @@ fi
 process_file "$TEXT_FILE1" "$DEST_FILE1"
 process_file "$TEXT_FILE2" "$DEST_FILE2"
 process_file "$TEXT_FILE3" "$DEST_FILE3"
+process_file "$TEXT_FILE4" "$DEST_FILE4"
 
 echo -e "${GREEN}Operazioni completate con successo.${RESET}"

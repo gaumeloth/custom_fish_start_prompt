@@ -6,6 +6,7 @@ if status is-interactive
     jp2a --height=25 --color "$HOME/.config/neofetch/logoLunaLabs.jpeg"
     neofetch
     misfortune -a
+    updatechek
 
     starship init fish | source
 end
