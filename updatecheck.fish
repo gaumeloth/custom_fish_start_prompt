@@ -1,10 +1,13 @@
 function updatecheck
+    # Imposta la soglia di aggiornamenti: se il totale supera questo valore verrà chiesta conferma per aggiornare.
+    set update_threshold 10
+
     # Funzione ausiliaria per visualizzare una barra di progressione
     function progress_bar
         # Argomento: percentuale (intero, da 0 a 100)
         set progress $argv[1]
         set bar_width 30
-        # Calcola il numero di caratteri "pieni" utilizzando floor per forzare il risultato in un intero
+        # Calcola il numero di caratteri "pieni" utilizzando floor per ottenere un intero
         set filled (math "floor($progress * $bar_width / 100)")
         # Calcola il numero di caratteri "vuoti"
         set unfilled (math "$bar_width - $filled")
@@ -16,11 +19,11 @@ function updatecheck
         for i in (seq 1 $unfilled)
             set empty_bar "$empty_bar-"
         end
-        # Stampa la barra di avanzamento sulla stessa riga (il carriage return "\r" riposiziona il cursore)
+        # Stampa la barra di avanzamento sulla stessa riga
         printf "\r[%s%s] %d%% Completato" $fill_bar $empty_bar $progress
     end
 
-    # Stampa della notifica inizio processo
+    # Inizio processo di aggiornamento
     set_color blue
     echo "=== Cerco aggiornamenti di Arch Linux ==="
     set_color normal
@@ -43,7 +46,7 @@ function updatecheck
     set total_updates (paru -Qu | wc -l)
     set_color green
     progress_bar 100
-    echo "" # linea finale per completare la barra
+    echo "" # Vai a capo per terminare la visualizzazione della barra
 
     # Stampa finale dell'output, con l'uso di colori
     set_color brblue
@@ -75,4 +78,27 @@ function updatecheck
     set_color brblue
     echo "========================================="
     set_color normal
+
+    # Verifica se il totale di aggiornamenti supera la soglia impostata
+    if test $total_updates -gt $update_threshold
+        set_color yellow
+        echo "Il numero totale di aggiornamenti ($total_updates) supera la soglia ($update_threshold)."
+        read -P "Vuoi effettuare subito gli aggiornamenti? (s/N): " user_choice
+        set_color normal
+        if test "$user_choice" = s -o "$user_choice" = S
+            set_color green
+            echo "Procedo con l'aggiornamento..."
+            set_color normal
+            # Esegui l'aggiornamento: il comando qui eseguito è un alias personalizzato
+            sysup
+        else
+            set_color red
+            echo "Aggiornamento annullato."
+            set_color normal
+        end
+    else
+        set_color yellow
+        echo "Il numero di aggiornamenti ($total_updates) non supera la soglia ($update_threshold)."
+        set_color normal
+    end
 end
