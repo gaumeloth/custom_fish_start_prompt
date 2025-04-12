@@ -33,7 +33,7 @@ function updatecheck
     progress_bar 0
 
     # Step 1: Conta gli aggiornamenti dai repository ufficiali
-    set official_updates (pacman -Qu | wc -l)
+    set official_updates (checkupdates | wc -l)
     set_color yellow
     progress_bar 33
 
