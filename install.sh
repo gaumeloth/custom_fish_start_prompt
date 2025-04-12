@@ -124,8 +124,10 @@ DEST_FILE4="${DEST_DIR_FISH}/functions/${TEXT_FILE4}" # updatecheck.fish
 ###################################
 # Installazione dei pacchetti     #
 ###################################
-echo -e "${BLUE}Procedo con l'installazione dei pacchetti:${RESET} ${BOLD}neofetch, jp2a, misfortune${RESET}."
-sudo pacman -S --noconfirm neofetch jp2a misfortune || {
+echo -e "${BLUE}Procedo con l'aggiornamento del sistema${RESET}"
+sudo pacman -Suy
+echo -e "${BLUE}Procedo con l'installazione dei pacchetti:${RESET} ${BOLD}neofetch, jp2a, misfortune, pacman-contrib${RESET}."
+sudo pacman -S --noconfirm neofetch jp2a misfortune pacman-contrib || {
   echo -e "${RED}Errore:${RESET} durante l'installazione dei pacchetti"
   exit 1
 }
