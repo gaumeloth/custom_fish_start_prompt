@@ -43,7 +43,7 @@ function updatecheck
     progress_bar 66
 
     # Step 3: Conta il totale degli aggiornamenti (sia ufficiali che AUR) con paru
-    set total_updates (paru -Qu | wc -l)
+    set total_updates (math "$official_updates + $aur_updates")
     set_color green
     progress_bar 100
     echo "" # Vai a capo per terminare la visualizzazione della barra
